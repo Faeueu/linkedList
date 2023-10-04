@@ -1,0 +1,102 @@
+#include <iostream>
+using namespace std;
+
+struct No {
+    int data;
+    No* next;
+};
+
+No *inserir(No *head, int num) {
+    No *novoNo = new No{num, NULL};
+    novoNo->next = head;
+    return novoNo;
+}
+
+No *reverterList(No *head) {
+    No *anterior = NULL;
+    No *atual = head;
+    No *next = NULL;
+
+    while (atual != NULL) {
+        next = atual->next;
+        atual->next = anterior;
+        anterior = atual;
+        atual = next;
+    }
+
+    return anterior;
+}
+
+bool palindromo(No *head) {
+    if (head == NULL || head->next == NULL) {
+        return true;
+    }
+
+    int tamanho = 0;
+    No *atual = head;
+    while (atual != NULL) {
+        tamanho++;
+        atual = atual->next;
+    }
+
+    int metade[tamanho / 2];
+    int indice = 0;
+    atual = head;
+
+    while (indice < tamanho / 2) {
+        metade[indice] = atual->data;
+        atual = atual->next;
+        indice++;
+    }
+
+    if (tamanho % 2 != 0) {
+        atual = atual->next;
+    }
+
+    while (atual != NULL) {
+        if (atual->data != metade[indice - 1]) {
+            return false;
+        }
+        atual = atual->next;
+        indice--;
+    }
+
+    return true;
+}
+
+void printList(No *head) {
+    No *atual = head;
+    while (atual != NULL) {
+        cout << atual->data << endl;
+        atual = atual->next;
+    }
+    cout << "NULL" << endl;
+}
+
+int main() {
+    No *lista = NULL;
+    lista = inserir(lista, 1);
+    lista = inserir(lista, 2);
+    lista = inserir(lista, 3);
+    lista = inserir(lista, 2);
+    lista = inserir(lista, 1);
+
+    cout << "Lista original:" << endl;
+    printList(lista);
+
+    bool resultado = palindromo(lista);
+
+    if (resultado) {
+        cout << "A lista e um palindromo." << endl;
+    } else {
+        cout << "A lista nao e um palindromo." << endl;
+    }
+
+    while (lista != NULL) {
+        No *temp = lista;
+        lista = lista->next;
+        delete temp;
+    }
+
+    return 0;
+}
