@@ -6,16 +6,19 @@ struct No {
     No* next;
 };
 
-No *inserir(No *head, int num) {
-    No *novoNo = new No{num, NULL};
+void inserir(No* &head, int num) {
+    No *novoNo = new No;
+
+    novoNo->data = num;
     novoNo->next = head;
-    return novoNo;
+
+    head = novoNo;
 }
 
-No *reverterList(No *head) {
-    No *anterior = NULL;
-    No *atual = head;
-    No *next = NULL;
+void reverterList(No* &head) {
+    No* anterior = NULL;
+    No* atual = head;
+    No* next = NULL;
 
     while (atual != NULL) {
         next = atual->next;
@@ -24,7 +27,7 @@ No *reverterList(No *head) {
         atual = next;
     }
 
-    return anterior;
+    head = anterior;
 }
 
 bool palindromo(No *head) {
@@ -75,11 +78,12 @@ void printList(No *head) {
 
 int main() {
     No *lista = NULL;
-    lista = inserir(lista, 1);
-    lista = inserir(lista, 2);
-    lista = inserir(lista, 3);
-    lista = inserir(lista, 2);
-    lista = inserir(lista, 1);
+
+    inserir(lista, 1);
+    inserir(lista, 2);
+    inserir(lista, 3);
+    inserir(lista, 2);
+    inserir(lista, 1);
 
     cout << "Lista original:" << endl;
     printList(lista);

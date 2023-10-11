@@ -6,10 +6,13 @@ struct No {
     No *next;
 };
 
-No *inserir(No *head, int num) {
-    No* novoNo = new No{num, NULL};
+void inserir(No* &head, int num) {
+    No *novoNo = new No;
+
+    novoNo->data = num;
     novoNo->next = head;
-    return novoNo;
+
+    head = novoNo;
 }
 
 int contagem(No *head, int vezes) {
@@ -37,12 +40,13 @@ void printlista(No *head) {
 
 int main() {
     No *lista = NULL;
-    lista = inserir(lista, 1);
-    lista = inserir(lista, 2);
-    lista = inserir(lista, 3);
-    lista = inserir(lista, 2);
-    lista = inserir(lista, 4);
-    lista = inserir(lista, 2);
+
+    inserir(lista, 1);
+    inserir(lista, 2);
+    inserir(lista, 3);
+    inserir(lista, 2);
+    inserir(lista, 4);
+    inserir(lista, 2);
 
     cout << "lista:" << endl;
     printlista(lista);
@@ -50,7 +54,7 @@ int main() {
     int vezes = 2;
     int ocorrencia = contagem(lista, vezes);
 
-    cout << "O numero " << vezes<< " ocorre " << ocorrencia << " vezes na lista" << endl;
+    cout << "O numero " << vezes<< " aparece " << ocorrencia << " vezes na lista" << endl;
 
 
     while (lista != NULL) {

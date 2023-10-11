@@ -6,10 +6,13 @@ struct No {
     No *next;
 };
 
-No *inserir(No *head, int num) {
-    No *novoNo = new No{num, NULL};
+void inserir(No* &head, int num) {
+    No *novoNo = new No;
+
+    novoNo->data = num;
     novoNo->next = head;
-    return novoNo;
+
+    head = novoNo;
 }
 
 void printList(No *head) {
@@ -21,9 +24,9 @@ void printList(No *head) {
     cout << "NULL" << endl;
 }
 
-No *inverter(No *head, int inicio, int fim) {
-    if (head == NULL || head->next == NULL || inicio >= fim) {
-        return head;
+void inverter(No* &head, int inicio, int fim) {
+    if (head == NULL || (head)->next == NULL || inicio >= fim) {
+        return;
     }
 
     No *dummy = new No{-1, NULL};
@@ -39,13 +42,13 @@ No *inverter(No *head, int inicio, int fim) {
     }
 
     No *inicioIntervalo = atual;
-    No *proximo = NULL;
+    No *next = NULL;
     No *fimIntervalo = NULL;
     while (posicao <= fim) {
-        proximo = atual->next;
+        next = atual->next;
         atual->next = fimIntervalo;
         fimIntervalo = atual;
-        atual = proximo;
+        atual = next;
         posicao++;
     }
 
@@ -54,25 +57,24 @@ No *inverter(No *head, int inicio, int fim) {
 
     head = dummy->next;
     delete dummy;
-
-    return head;
 }
+
 
 int main() {
     No *lista = NULL;
 
-    lista = inserir(lista, 10);
-    lista = inserir(lista, 20);
-    lista = inserir(lista, 30);
-    lista = inserir(lista, 40);
-    lista = inserir(lista, 50);
+    inserir(lista, 10);
+    inserir(lista, 20);
+    inserir(lista, 30);
+    inserir(lista, 40);
+    inserir(lista, 50);
 
     cout << "Lista original:" << endl;
     printList(lista);
 
     int inicio = 2;
     int fim = 4;
-    lista = inverter(lista, inicio, fim);
+    inverter(lista, inicio, fim);
     cout << endl;
 
     cout << "Lista invertida de " << inicio << " a " << fim << ":" << endl;
